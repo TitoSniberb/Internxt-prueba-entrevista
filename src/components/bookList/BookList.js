@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import Book from './Book';
+import Book from '../book/Book';
 
 const BookList = () => {
 

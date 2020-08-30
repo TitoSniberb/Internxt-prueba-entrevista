@@ -1,11 +1,11 @@
-import React from 'react';
-import ListadoTareas from './components/BookList';
+import React, { Fragment } from 'react';
+import ListadoTareas from './components/bookList/BookList';
 
 function App() {
   return (
-    <div className="contenedor">
+    <Fragment>
       <ListadoTareas />
-    </div>
+    </Fragment>
   );
 }
 

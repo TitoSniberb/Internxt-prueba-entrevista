@@ -1,0 +1,45 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid;
+}
+
+@media (max-width: 480px) {
+    /* For mobile phones: */
+    .container {
+        flex-direction: column;
+        padding: 2.5vw 0;
+    }
+
+    .name {
+        font-size: 7vw !important;
+    }
+
+    .btn {
+        margin: 1vw 0 0 0;
+        width: 30vw !important;
+        height: 7vw !important;
+        font-size: 4vw !important;
+        
+    }
+}
+
+.name {
+    flex: 0.9 1;
+    display: flex;
+    justify-content: center;
+    font-size: 4vw;
+    text-align: center;
+}
+
+.btn {
+    width: 16vw;
+    height: 6vw;
+    font-size: 2.5vw;
+    border-radius: .5rem;
+    border: none;
+    font-family: 'Staatliches', cursive;
+    color: #D41872;
+}

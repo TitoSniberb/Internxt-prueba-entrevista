@@ -1,17 +1,18 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+import './Styles.scss';
 
 const Book = ({book}) => {
 
-    const { name, description } = book;
+    const { name } = book;
 
     return ( 
-        <div>
-            <h2>
+        <div className="container">
+            <h2 className="name">
                 {name}
             </h2>
 
             <button
-            
+                className="btn"
             >EDIT</button>
         </div>    
     );
