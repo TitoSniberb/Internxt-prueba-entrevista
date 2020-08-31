@@ -11,9 +11,10 @@ exports.addBook = async (req, res) => {
     }
 
     try {
-        // Extract name and description of the book
-        const { name, description } = req.body;
-        const bookAlreadyExists = await Book.findById(name);
+        //console.log(req.body)
+        // Check if the book already exists
+        const { name } = req.body;
+        const bookAlreadyExists = await Book.findOne({name: name});
 
         if(bookAlreadyExists) {
             return res.status(404).json({ msg: 'The book you are trying to add already exists.' });
@@ -48,7 +49,7 @@ exports.updateBook = async (req, res) => {
         if(description) newBook.description = description;
 
         // Guardar la tarea
-        book = await Book.findOneAndUpdate({ _id: req.params.id }, newBook, { new: true});
+        book = await Book.findOneAndUpdate({ id: req.params.id }, newBook, { new: true});
         
         res.json({ book });
 

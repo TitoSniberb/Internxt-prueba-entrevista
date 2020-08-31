@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, Fragment } from "react";
+import React, { useContext, useState } from "react";
 import Popup from "reactjs-popup";
 import BookContext from '../../context/books/bookContext';
 import '../Styles.scss';
@@ -31,7 +31,9 @@ export const EditableModal = () => {
         description: '',
     });
 
-    const onChangeBook = e => {
+    const { name, description } = book;
+
+    const handleChange = e => {
         setBook({
             ...book,
             [e.target.name]: e.target.value
@@ -50,10 +52,11 @@ export const EditableModal = () => {
                     <input
                         type="text"
                         name="name"
+                        value={name}
                         className="input-text"
                         placeholder='Enter the new desired name of the book'
                         autoComplete="off"
-                        onChange={onChangeBook}
+                        onChange={handleChange}
                     />
                 </div>
                 
@@ -61,11 +64,12 @@ export const EditableModal = () => {
                     <h2 className="label">Change the description</h2>
                     <input
                         type="text"
-                        name="name"
+                        name="description"
+                        value={description}
                         className="input-text"
                         contentEditable={true}
                         placeholder='Enter the new desired description of the book'
-                        onChange={onChangeBook}
+                        onChange={handleChange}
                     />
                 </div>
             </div>

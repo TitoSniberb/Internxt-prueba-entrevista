@@ -9,10 +9,11 @@ const connectDB = async () => {
             useFindAndModify: false
 
         })
+        console.log('DB Connected')
         
     } catch (error) {
         console.log(error);
-        process.exit(1);
+        process.exit(1); // Stop the app
     }
 }
 
