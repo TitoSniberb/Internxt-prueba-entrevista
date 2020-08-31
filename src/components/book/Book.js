@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { DescriptiveModal } from '../modals/Modals';
+import { DescriptiveModal, EditableModal } from '../modals/Modals';
 import BookContext from '../../context/books/bookContext';
 import '../Styles.scss';
 
@@ -9,22 +9,23 @@ const Book = ({book}) => {
     const bookContext = useContext(BookContext);
     const { getCurrentBook } = bookContext;
 
+    const { id } = book;
+
     const handleOnClick = id => {
         getCurrentBook(id);
-    }
+    };
+
 
     return ( 
         <div className="container">
             <DescriptiveModal
                 book={book}
-                className="bookName"
             />
 
-            <button 
-                className="btn"
-                onClick={() => handleOnClick(book.id)}
-            >
-                EDIT
+            <button className="transparente" onClick={() => handleOnClick(id)}>
+                <EditableModal
+                    book={book}
+                />
             </button>
         </div>    
     );

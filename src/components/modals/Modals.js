@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState, Fragment } from "react";
 import Popup from "reactjs-popup";
 import BookContext from '../../context/books/bookContext';
 import '../Styles.scss';
@@ -26,17 +26,25 @@ export const DescriptiveModal = ({book}) => {
 
 export const EditableModal = () => {
 
-    const bookContext = useContext(BookContext);
- 
+    const [ book, setBook ] = useState({
+        name: '',
+        description: '',
+    });
+
+    const onChangeBook = e => {
+        setBook({
+            ...book,
+            [e.target.name]: e.target.value
+        })
+    };
+
     return (
         <Popup
             trigger={<button className="btn"> EDIT </button>}
             modal
             closeOnDocumentClick
         >
-            <form 
-                className="contenedor"
-            >
+            <div className="contenedor">
                 <div className="row">
                     <h2 className="label">Change the name</h2>
                     <input
@@ -44,6 +52,8 @@ export const EditableModal = () => {
                         name="name"
                         className="input-text"
                         placeholder='Enter the new desired name of the book'
+                        autoComplete="off"
+                        onChange={onChangeBook}
                     />
                 </div>
                 
@@ -55,9 +65,10 @@ export const EditableModal = () => {
                         className="input-text"
                         contentEditable={true}
                         placeholder='Enter the new desired description of the book'
+                        onChange={onChangeBook}
                     />
                 </div>
-            </form>
+            </div>
         </Popup>
     )   
 }
