@@ -12,14 +12,15 @@ export default (state, action) => {
         case GET_CURRENT_BOOK:
             return {
                 ...state,
-                book: state.books.filter(book => book.id === action.payload)
+                currentbook: state.books.filter( book => book._id === action.payload )
             }
 
-        /* case PUT_BOOKS:
+        case PUT_BOOKS:
             return {
                 ...state,
-                book: state.book
-            } */
+                books: state.books.map( book => book._id === action.payload._id ?
+                    action.payload : book )
+            }
 
         default:
             return state

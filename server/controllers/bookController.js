@@ -11,7 +11,6 @@ exports.addBook = async (req, res) => {
     }
 
     try {
-        //console.log(req.body)
         // Check if the book already exists
         const { name } = req.body;
         const bookAlreadyExists = await Book.findOne({name: name});
@@ -31,12 +30,33 @@ exports.addBook = async (req, res) => {
     }
 }
 
+// Get all books
+exports.getBooks = async (req, res) => {
+    
+    try {
+        // Check if there are books
+        const { name } = req.body;
+        const bookExists = await Book.find();
+
+        if(!bookExists) {
+            return res.status(404).json({ msg: 'There are no books to search' });
+        }
+
+        // Get all books
+        const books = await Book.find({ });
+        res.json({ books });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('There was an error');
+    }   
+}
+
 // Update a book
 exports.updateBook = async (req, res) => {
     try {
         // Extract name and description of the book
         const { name, description } = req.body;
-
         // Find specific book
         let book = await Book.findById(req.params.id);
         if(!book) {
@@ -45,11 +65,11 @@ exports.updateBook = async (req, res) => {
 
         // Create new book
         const newBook = {};
-        if(name) newBook.name = name;
-        if(description) newBook.description = description;
+        newBook.name = name;
+        newBook.description = description;
 
         // Guardar la tarea
-        book = await Book.findOneAndUpdate({ id: req.params.id }, newBook, { new: true});
+        book = await Book.findOneAndUpdate({ _id: req.params.id }, newBook, { new: true});
         
         res.json({ book });
 

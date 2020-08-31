@@ -1,11 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Popup from "reactjs-popup";
 import BookContext from '../../context/books/bookContext';
 import '../Styles.scss';
 
 export const DescriptiveModal = ({book}) => {
-
-    const bookContext = useContext(BookContext);
 
     // Object destructuring to get name and desc
     const { name, description } = book;
@@ -24,20 +22,28 @@ export const DescriptiveModal = ({book}) => {
     )   
 }
 
-export const EditableModal = () => {
+export const EditableModal = ({book}) => {
 
-    const [ book, setBook ] = useState({
-        name: '',
-        description: '',
-    });
+    // Extract the necessary from the context
+    const bookContext = useContext(BookContext);
+    const { currentbook, updateBook } = bookContext;
 
-    const { name, description } = book;
+    // Object destructuring to get name and desc
+   // const { _id, name, description } = book;
+
+    const [ newbook, setNewBook ] = useState({
+        
+    })
+
+    const { name, description } = newbook;
 
     const handleChange = e => {
-        setBook({
-            ...book,
+        setNewBook({
+            ...newbook,
             [e.target.name]: e.target.value
-        }) 
+        });
+
+        updateBook(newbook)
     };
 
     return (
@@ -45,6 +51,7 @@ export const EditableModal = () => {
             trigger={<button className="btn"> EDIT </button>}
             modal
             closeOnDocumentClick
+            onOpen={() => setNewBook(book)}
         >
             <div className="contenedor">
                 <div className="row">
@@ -71,6 +78,9 @@ export const EditableModal = () => {
                         placeholder='Enter the new desired description of the book'
                         onChange={handleChange}
                     />
+                    <button
+                        onClick={() => updateBook(newbook)}
+                    ></button>
                 </div>
             </div>
         </Popup>

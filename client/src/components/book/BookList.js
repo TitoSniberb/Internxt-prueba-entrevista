@@ -13,12 +13,13 @@ const BookList = () => {
         getBooks();
     }, []);
 
-    if(!books) return <p>No hay ningun libro actualmente registrado</p>
+    if(!books) return <p>There is no books to search for</p>
 
     return ( 
             <ul>
                 { books.map(book => (
-                    <Book 
+                    <Book
+                        key={book._id}
                         book={book}
                     />
                     ))
