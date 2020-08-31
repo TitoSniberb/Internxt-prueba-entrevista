@@ -35,7 +35,7 @@ export const EditableModal = () => {
         setBook({
             ...book,
             [e.target.name]: e.target.value
-        })
+        }) 
     };
 
     return (
