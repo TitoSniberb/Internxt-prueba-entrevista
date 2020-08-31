@@ -1,5 +1,6 @@
 import React from 'react';
-import './Styles.scss';
+import Modal from '../modal/Modal';
+import '../Styles.scss';
 
 const Book = ({book}) => {
 
@@ -7,13 +8,14 @@ const Book = ({book}) => {
 
     return ( 
         <div className="container">
-            <h2 className="name">
-                {name}
-            </h2>
+            <Modal 
+                className="bookName"
+                book={book}
+            />
 
-            <button
-                className="btn"
-            >EDIT</button>
+            <button className="btn">
+                EDIT
+            </button>
         </div>    
     );
 }
