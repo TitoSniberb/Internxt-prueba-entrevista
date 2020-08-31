@@ -1,19 +1,29 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Modal from '../modal/Modal';
+import BookContext from '../../context/books/bookContext';
 import '../Styles.scss';
 
 const Book = ({book}) => {
 
-    const { name } = book;
+    // Extract the necessary from the context
+    const bookContext = useContext(BookContext);
+    const { getCurrentBook } = bookContext;
+
+    const handleOnClick = id => {
+        getCurrentBook(id);
+    }
 
     return ( 
         <div className="container">
-            <Modal 
-                className="bookName"
+            <Modal
                 book={book}
+                className="bookName"
             />
 
-            <button className="btn">
+            <button 
+                className="btn"
+                onClick={() => handleOnClick(book.id)}
+            >
                 EDIT
             </button>
         </div>    

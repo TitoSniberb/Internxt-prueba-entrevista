@@ -1,12 +1,17 @@
 import React, { useReducer } from 'react';
 import BookContext from './bookContext';
 import BookReducer from './bookReducer';
-import { GET_BOOKS, PUT_BOOKS } from '../../types/index'
+import { 
+    GET_BOOKS, 
+    GET_CURRENT_BOOK, 
+    PUT_BOOKS 
+} from '../../types/index'
 
 const BookState = props => {
 
     const initialState = {
         books: [],
+        book: null
     }
 
     const books = [
@@ -39,6 +44,14 @@ const BookState = props => {
         })
     }
 
+    // Get current book
+    const getCurrentBook = bookId => {
+        dispatch({
+            type: GET_CURRENT_BOOK,
+            payload: bookId
+        })
+    }
+
     // Modificar libro
     const updateBooks = book => {
         dispatch({
@@ -51,7 +64,9 @@ const BookState = props => {
         <BookContext.Provider
             value={{
                 books: state.books,
+                currentBook: state.currentBook,
                 getBooks,
+                getCurrentBook,
                 updateBooks
             }}
         >
