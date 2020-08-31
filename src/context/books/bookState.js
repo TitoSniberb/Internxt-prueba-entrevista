@@ -64,7 +64,7 @@ const BookState = props => {
         <BookContext.Provider
             value={{
                 books: state.books,
-                currentBook: state.currentBook,
+                book: state.book,
                 getBooks,
                 getCurrentBook,
                 updateBook
