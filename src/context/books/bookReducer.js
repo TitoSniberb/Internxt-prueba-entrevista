@@ -15,10 +15,11 @@ export default (state, action) => {
                 book: state.books.filter(book => book.id === action.payload)
             }
 
-        case PUT_BOOKS:
+        /* case PUT_BOOKS:
             return {
-                ...state
-            }
+                ...state,
+                book: state.book
+            } */
 
         default:
             return state

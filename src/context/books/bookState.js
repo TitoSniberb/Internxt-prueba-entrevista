@@ -11,7 +11,7 @@ const BookState = props => {
 
     const initialState = {
         books: [],
-        book: null
+        book: {}
     }
 
     const books = [
@@ -53,7 +53,7 @@ const BookState = props => {
     }
 
     // Modificar libro
-    const updateBooks = book => {
+    const updateBook = book => {
         dispatch({
             type: PUT_BOOKS,
             payload: book
@@ -67,7 +67,7 @@ const BookState = props => {
                 currentBook: state.currentBook,
                 getBooks,
                 getCurrentBook,
-                updateBooks
+                updateBook
             }}
         >
             {props.children}

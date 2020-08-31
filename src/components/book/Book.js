@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import Modal from '../modal/Modal';
+import { DescriptiveModal } from '../modals/Modals';
 import BookContext from '../../context/books/bookContext';
 import '../Styles.scss';
 
@@ -15,7 +15,7 @@ const Book = ({book}) => {
 
     return ( 
         <div className="container">
-            <Modal
+            <DescriptiveModal
                 book={book}
                 className="bookName"
             />

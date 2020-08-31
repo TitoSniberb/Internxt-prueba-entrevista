@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
-import Book from './book/Book';
-import BookContext from '../context/books/bookContext';
+import Book from './Book';
+import BookContext from '../../context/books/bookContext';
 
 const BookList = () => {
 
