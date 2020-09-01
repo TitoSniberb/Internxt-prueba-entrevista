@@ -121,6 +121,24 @@
     width: 40%;
     height: 35rem;
     flex: 0.5 1;
+    margin: 11rem 0 0 0;
+}
+
+.icons {
+    margin: 0 auto;
+    margin-Top: 2rem;
+    width: 50%;
+    display: flex;
+    justify-Content: space-around;
+}
+
+.icon {
+    font-size: 6vw !important;
+    color: white;
+}
+
+.icon:hover{
+    color: rgb(214, 214, 214);
 }
 
 .label {
@@ -146,3 +164,24 @@
     outline: none;
 }
 
+.newmodal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.paper {
+    background-color: rgba(51, 137, 176, 0.7);
+    width: 40%;
+    border: 2px solid white;
+    border-radius: 0.5rem;
+    height: 70%;
+    outline: none;
+}
+
+.image {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

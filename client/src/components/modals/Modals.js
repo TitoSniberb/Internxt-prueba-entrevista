@@ -1,6 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
 import Popup from "reactjs-popup";
 import BookContext from '../../context/books/bookContext';
+import Modal from '@material-ui/core/Modal';
+import Fade from '@material-ui/core/Fade';
 import '../styles.scss';
 
 export const DescriptiveModal = ({book}) => {
@@ -104,4 +106,43 @@ export const EditableModal = ({book}) => {
             </div>
         </Popup>
     )   
+}
+
+export const TransitionsModal = ({open, handleClose}) => {
+
+    const bookContext = useContext(BookContext);
+    const { currentbook } = bookContext;
+
+    const [ books, setBook ] = useState({
+        name: '',
+    });
+
+    useEffect(() => {
+        if( currentbook !== null) {
+            setBook(currentbook);
+            console.log('adwa', books)
+        } else {
+            setBook({
+                name: ''
+            })
+        }
+    }, [currentbook])
+
+    return (
+        <Modal
+            aria-labelledby="transition-modal-title"
+            aria-describedby="transition-modal-description"
+            className='newmodal'
+            open={open}
+            onClose={handleClose}
+            closeAfterTransition
+        >
+            <Fade in={open}>
+                <div className='paper'>
+                    <h2 id="transition-modal-title">Name{}</h2>
+                    <p id="transition-modal-description">Desc{}</p>
+                </div>
+            </Fade>
+        </Modal>
+    );
 }

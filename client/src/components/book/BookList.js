@@ -2,11 +2,16 @@ import React, { useContext, useEffect, useState } from 'react';
 import BookContext from '../../context/books/bookContext';
 import Carousel from 'react-spring-3d-carousel';
 import { config } from "react-spring";
+import { DescriptiveModal, EditableModal, TransitionsModal } from '../modals/Modals';
+import { 
+    NavigateBefore,
+    NavigateNext,
+    BorderColor
+} from '@material-ui/icons';
 import '../styles.scss';
 
 const BookList = () => {
 
-    const [ gotoslide, setGoToSlide ] = useState(0)
     const slides = [
         {
             key: "5f4d261ec4ed3d4f043ccd18",
@@ -28,26 +33,40 @@ const BookList = () => {
             key: "5f4d2be0dcd81309080a6257",
             content: <img src={require('../../assets/images/The case of Charles Dexter Ward.jpg')} alt="Book cover" />
         }
-    ].map((slide, index) => {
-        return {...slide, onClick: () => {
-            getCurrentBook(slide.key);
-        }}
-    });
+    ]
 
     // Extract the necessary from the context
     const bookContext = useContext(BookContext);
     const { books, currentbook, getBooks, getCurrentBook } = bookContext;
 
-    const [ newbook, setNewBook ] = useState({
-        name: '',
-        description: ''
-    });
-    const { name, description } = newbook;
+    const [ gotoslide, setGoToSlide ] = useState(0);
 
-    // Get books when the component loads
+    let currentKey;
+
+    const [ open, setOpen ] = useState(false);
+
+    const index = Math.abs(gotoslide % slides.length);
+
+    const onMount = async () => {
+        await getBooks();
+
+        currentKey = slides[index].key;
+        await getCurrentBook(currentKey);
+    }
+
     useEffect(() => {
-        getBooks();
-    }, [getBooks]);
+        onMount();
+    }, []);
+
+    // Open modal
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    // Close modal
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     if(!books) return <p>There is no books to search for</p>
 
@@ -55,49 +74,52 @@ const BookList = () => {
         <div className="container main">
 
             <div className="row carousel">
-                <Carousel 
-                    slides={slides} 
-                    goToSlide={gotoslide}
-                    offsetRadius={3}
-                    animationConfig={config.gentle}
+                <a style={{width: '100%', height: '100%'}} onClick={handleOpen}>
+                    <Carousel 
+                        slides={slides} 
+                        goToSlide={gotoslide}
+                        offsetRadius={3}
+                        animationConfig={config.gentle}
+                    />
+                </a>
+                
+                <TransitionsModal
+                    open={open}
+                    handleClose={handleClose}
                 />
 
                 <div
-                    style={{
-                        margin: "0 auto",
-                        marginTop: "2rem",
-                        width: "50%",
-                        display: "flex",
-                        justifyContent: "space-around"
-                    }}
+                    className="icons"
                 >
-                    <div>
-                        <button
-                            onClick={() => setGoToSlide(gotoslide - 1)}
-                        >Left Arrow</button>
-                        &nbsp; &nbsp; &nbsp; &nbsp;
-                        <button
-                            onClick={() => setGoToSlide(gotoslide + 1)}
-                        >Right Arrow</button>
-                    </div>
+                    <a  style={{marginRight: '8vw'}}
+                        onClick={() => {
+                            setGoToSlide(gotoslide - 1)
+                            getCurrentBook(slides[index].key)
+                        }}
+                    >
+                        <NavigateBefore className="icon" />
+                    </a>
+
+                    <a className="image">
+                        <BorderColor className="icon" style={{fontSize: '4vw'}} />
+                        <p>EDIT</p>
+                    </a>
+
+                    <a  style={{marginLeft: '8vw'}}
+                        onClick={() => {
+                            setGoToSlide(gotoslide + 1)
+                            getCurrentBook(slides[index].key)
+                        }}
+                    >
+                        <NavigateNext className="icon" />
+                    </a>
                 </div>
 
             </div>
 
             <div className="row">
-                    {currentbook ? <h2> {name} </h2> : <h2>Click on a book to show it's info!</h2>} 
+                    <h2>{}</h2>
             </div>
-
-                {/* <div style={{
-                    margin: "0 auto",
-                    marginTop: "2rem",
-                    width: "50%",
-                    display: "flex",
-                    justifyContent: "space-around"
-                    }}
-                >
-
-                </div> */}
 
                 {/* <ul>
                     { books.map(book => (
