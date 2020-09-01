@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import BookContext from '../../context/books/bookContext';
 import Carousel from 'react-spring-3d-carousel';
 import { config } from "react-spring";
+import '../styles.scss';
 
 const BookList = () => {
 
@@ -53,33 +54,34 @@ const BookList = () => {
     return ( 
         <div className="container main">
 
-            <div className="carousel">
+            <div className="row carousel">
                 <Carousel 
                     slides={slides} 
                     goToSlide={gotoslide}
                     offsetRadius={3}
                     animationConfig={config.gentle}
                 />
-            </div>
 
-            <div
-                style={{
-                    margin: "0 auto",
-                    marginTop: "2rem",
-                    width: "50%",
-                    display: "flex",
-                    justifyContent: "space-around"
-                }}
-            >
-                <div>
-                    <button
-                        onClick={() => setGoToSlide(gotoslide - 1)}
-                    >Left Arrow</button>
-                    &nbsp; &nbsp; &nbsp; &nbsp;
-                    <button
-                        onClick={() => setGoToSlide(gotoslide + 1)}
-                    >Right Arrow</button>
+                <div
+                    style={{
+                        margin: "0 auto",
+                        marginTop: "2rem",
+                        width: "50%",
+                        display: "flex",
+                        justifyContent: "space-around"
+                    }}
+                >
+                    <div>
+                        <button
+                            onClick={() => setGoToSlide(gotoslide - 1)}
+                        >Left Arrow</button>
+                        &nbsp; &nbsp; &nbsp; &nbsp;
+                        <button
+                            onClick={() => setGoToSlide(gotoslide + 1)}
+                        >Right Arrow</button>
+                    </div>
                 </div>
+
             </div>
 
             <div className="row">

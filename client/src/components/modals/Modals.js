@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import Popup from "reactjs-popup";
 import BookContext from '../../context/books/bookContext';
-import '../Styles.scss';
+import '../styles.scss';
 
 export const DescriptiveModal = ({book}) => {
 
@@ -42,7 +42,7 @@ export const EditableModal = ({book}) => {
     };
 
     // As useState is asnycrhonous, the last character typed will not save until the next
-    //  render, so useEffect is needed, also, we must first check if there is any entries
+    // render, so useEffect is needed, also, we must first check if there is any entries
     // to prevent unwanted loops
     useEffect(() => {
         // We make the validation
