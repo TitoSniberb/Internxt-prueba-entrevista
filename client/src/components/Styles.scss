@@ -111,26 +111,33 @@
 .row {
     display: flex;
     flex-direction: column;
-    flex: .5 1;
+    flex: 0.5;
     justify-content: center;
     align-items: center;
-    width: 100%;
+}
+
+.row-name {
+    display: flex;
+    flex-direction: column;
+    flex: 0.2;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.row-desc {
+    display: flex;
+    flex-direction: column;
+    flex: 0.8;
+    align-items: center;
+    margin-top: 2rem;
 }
 
 .carousel {
-    width: 40%;
-    height: 35rem;
+    height: 40rem;
     flex: 0.5 1;
-    margin: 11rem 0 0 0;
+    margin: 7rem 0 0 0;
 }
 
-.icons {
-    margin: 0 auto;
-    margin-Top: 2rem;
-    width: 50%;
-    display: flex;
-    justify-Content: space-around;
-}
 
 .icon {
     font-size: 6vw !important;
@@ -139,6 +146,15 @@
 
 .icon:hover{
     color: rgb(214, 214, 214);
+    cursor: pointer;
+}
+
+.icons {
+    margin-Top: 2rem;
+    width: 100%;
+    display: flex;
+    justify-Content: space-around;
+    align-items: center;
 }
 
 .label {
@@ -146,16 +162,28 @@
     margin-bottom: 2vw;
 }
 
-.input-text {
+.input-name {
     padding: .6rem;
     border: none;
     border-radius: .5rem;
-    width: 70%;
     height: 2vw;
-    font-family: 'Staatliches';
-    font-size: 1.3vw;
+    width: 30vw;
+    font-size: 2vw;
     outline: none;
-    color: #D41872;
+    color: rgba(28, 46, 66, 0.8);
+}
+
+.input-desc {
+    padding: .6rem;
+    border: none;
+    border-radius: .5rem;
+    height: 26vw;
+    width: 30vw;
+    max-width: 35vw;
+    max-height: 30vw;
+    font-size: 1.4vw;
+    outline: none;
+    color: rgba(28, 46, 66, 0.8);
 }
 
 .transparente {
@@ -173,7 +201,9 @@
 .paper {
     display: flex;
     flex-direction: column;
-    background-color: rgba(51, 137, 176, 0.7);
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(28,46,66, 0.8);
     width: 40%;
     border: 2px solid white;
     border-radius: 0.5rem;
@@ -181,29 +211,106 @@
     outline: none;
 }
 
-.image {
+.paper-edit {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: rgba(28, 46, 66, 0.8);
+    width: 45vw;
+    height: 46vw;
+    border: 2px solid white;
+    border-radius: 0.5rem;
+    outline: none;
+}
+
+.imagecontainer {
+    display: flex;
+    flex: 0.4 1;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.iconcontainer {
+    display: flex;
+    flex: 0.3 1;
+    justify-content: center;
+    align-items: center;
+}
+
+.image {
+    max-width: 100%;
+    height: auto;
+    background-image: url('../assets/images/EditButton.png');
+    background-size: cover;
+}
+
+.image:hover {
+    background-image: url('../assets/images/EditButtonGris.png');
 }
 
 .title {
     color: #e4e4e4;
     text-align: center;
     text-transform: uppercase;
-    font-family: 'Staatliches', cursive;
-    letter-spacing: .2vw;
-    font-size: 5vw;
-    word-break: break-word;
-    margin: 2vw 0;
+    letter-spacing: .1vw;
+    font-size: 3.5vw;
+    width: 80%;
+    margin-bottom: 2vw;
 }
 
 .text {
     color: #e4e4e4;
     text-align: center;
     text-transform: uppercase;
-    font-family: 'Staatliches', cursive;
     letter-spacing: .1vw;
-    font-size: 2vw;
+    font-size: 1.3vw;
+    width: 80%;
+    height: 50%;
+}
+
+.title-main {
+    color: #e4e4e4;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: .1vw;
+    font-size: 3.5vw;
+    width: 80%;
+    margin-bottom: 2vw;
+    margin-right: -20%;
+}
+
+.text-main {
+    color: #e4e4e4;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: .1vw;
+    font-size: 1.3vw;
+    width: 80%;
+    margin-right: -20%;
+    word-break: break-all;
+}
+
+.title-desc {
+    color: #e4e4e4;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: .1vw;
+    font-size: 2.5vw;
+    margin-bottom: 2vw;
+}
+
+.text-desc {
+    color: #e4e4e4;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: .1vw;
+    font-size: 2.5vw;
+    margin-bottom: 2vw;
+}
+
+.text:hover {
+    color: rgb(214, 214, 214);
+    cursor: pointer;
 }

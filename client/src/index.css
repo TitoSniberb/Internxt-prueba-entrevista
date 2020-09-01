@@ -10,21 +10,6 @@ body {
   min-height: 100%;
 }
 
-h2  {
-  margin: 0;
-  color: rgb(228, 228, 228);
-  text-align: center;
-  text-transform: uppercase;
-  font-family: 'Staatliches', cursive;
-  letter-spacing: .3vw;
-  cursor: pointer;
-}
-
-h2:hover  {
-  color: rgb(204, 204, 204);
-  letter-spacing: .35vw;
-}
-
 p {
   color: rgb(228, 228, 228);
   text-align: center;

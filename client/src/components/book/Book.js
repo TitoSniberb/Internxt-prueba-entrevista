@@ -1,28 +1,22 @@
-import React, { useContext } from 'react';
+import React, { useContext, Fragment } from 'react';
 import { DescriptiveModal, EditableModal } from '../modals/Modals';
 import BookContext from '../../context/books/bookContext';
 import '../Styles.scss';
 
 const Book = ({book}) => {
 
-    // Extract the necessary from the context
-    const bookContext = useContext(BookContext);
-    const { getCurrentBook } = bookContext;
-
-    const { _id } = book;
+    const { name, description } = book[0];
     
     return ( 
-        <div className="container">
-            <DescriptiveModal
-                book={book}
-            />
+           <Fragment>
+               <span className="title-main">
+                    {name}
+               </span>
 
-            <div className="transparente" onClick={() => getCurrentBook(_id)}>
-                <EditableModal 
-                    book={book}
-                />
-            </div>
-        </div>    
+               <span className="text-main">
+                    {description}
+               </span>
+           </Fragment>
     );
 }
  

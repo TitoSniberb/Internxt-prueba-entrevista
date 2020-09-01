@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import BookContext from '../../context/books/bookContext';
+import Book from '../book/Book';
 import Carousel from 'react-spring-3d-carousel';
 import { config } from "react-spring";
-import { DescriptiveModal, EditableModal, TransitionsModal } from '../modals/Modals';
+import { DescriptiveModal, EditableModal} from '../modals/Modals';
 import { 
     NavigateBefore,
     NavigateNext,
-    BorderColor
 } from '@material-ui/icons';
-import '../styles.scss';
+import '../Styles.scss';
 
 const BookList = () => {
 
@@ -37,9 +37,9 @@ const BookList = () => {
 
     // Extract the necessary from the context
     const bookContext = useContext(BookContext);
-    const { books, currentbook, getBooks, getCurrentBook } = bookContext;
+    const { books, currentbook, error, getBooks, getCurrentBook, updateBook } = bookContext;
 
-    const [ gotoslide, setGoToSlide ] = useState(0);
+    const [ gotoslide, setGoToSlide ] = useState(300);
     const [ opendesc, setOpenDesc ] = useState(false);
     const [ openedit, setOpenEdit ] = useState(false);
 
@@ -47,11 +47,11 @@ const BookList = () => {
 
     useEffect(() => {
         onMount();
-    }, []);
-
-    useEffect(() => {
-        getCurrentBook(gotoslide);
+        getCurrentBook(slides[index].key);
     }, [gotoslide]);
+
+    // In case of an empty input, we save the initial state of the book
+    const [ initialbook, setInitialBook ] = useState(currentbook[0]);
 
     const index = Math.abs(gotoslide % slides.length);
 
@@ -63,8 +63,6 @@ const BookList = () => {
     }
 
     if(currentbook.length === 0) return <div>loading</div>;
-    
-    const { name, description } = currentbook[0];
 
     // Open modal
     const handleOpenDescriptive = () => {
@@ -114,24 +112,22 @@ const BookList = () => {
                 <div
                     className="icons"
                 >
-                    <a  style={{marginRight: '8vw'}}
+                    <a  className="iconcontainer" 
                         onClick={() => {
                             setGoToSlide(gotoslide - 1)
-                            //getCurrentBook(slides[index].key)
                         }}
                     >
                         <NavigateBefore className="icon" />
                     </a>
 
-                    <a className="image" onClick={handleOpenEditable}>
-                        <BorderColor className="icon" style={{fontSize: '4vw'}} />
-                        <p>EDIT</p>
+                    <a className="imagecontainer" onClick={handleOpenEditable}>
+                        <img className="image" />
+                        <span className="text">EDIT</span>
                     </a>
 
-                    <a  style={{marginLeft: '8vw'}}
+                    <a  className="iconcontainer"
                         onClick={() => {
-                            setGoToSlide(gotoslide + 1)
-                            //getCurrentBook(slides[index].key)
+                            setGoToSlide(gotoslide + 1);
                         }}
                     >
                         <NavigateNext className="icon" />
@@ -141,18 +137,10 @@ const BookList = () => {
             </div>
 
             <div className="row">
-                    <h2>{name} : {description}</h2>
+                    <Book
+                        book={currentbook}
+                    />
             </div>
-
-                {/* <ul>
-                    { books.map(book => (
-                        <Book
-                            key={book._id}
-                            book={book}
-                        />
-                        ))
-                    }
-                </ul> */}
 
         </div>
      );
