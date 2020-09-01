@@ -26,32 +26,54 @@ export const EditableModal = ({book}) => {
 
     // Extract the necessary from the context
     const bookContext = useContext(BookContext);
-    const { currentbook, updateBook } = bookContext;
+    const { error, updateBook, showError } = bookContext;
 
-    // Object destructuring to get name and desc
-   // const { _id, name, description } = book;
+    const [ newbook, setNewBook ] = useState({})
+    const { _id, name, description } = newbook;
 
-    const [ newbook, setNewBook ] = useState({
-        
-    })
-
-    const { name, description } = newbook;
+    // In case of an empty input, we save the initial state of the book
+    const [ initialbook, setInitialBook ] = useState({})
 
     const handleChange = e => {
         setNewBook({
             ...newbook,
             [e.target.name]: e.target.value
         });
-
-        updateBook(newbook)
     };
+
+    // As useState is asnycrhonous, the last character typed will not save until the next
+    //  render, so useEffect is needed, also, we must first check if there is any entries
+    // to prevent unwanted loops
+    useEffect(() => {
+        // We make the validation
+        if(Object.entries(newbook).length !== 0){
+
+            if(name.trim().length === 0 || description.trim().length === 0){
+                showError(_id);
+
+            } else updateBook(newbook);
+        }
+
+    }, [newbook]);
+
+    // On modal open (for more info take a look into: https://react-popup.elazizi.com/component-api/)
+    const onOpen = book => {
+        setNewBook(book);
+        setInitialBook(book);
+    }
+
+    // If the user closes the modal with empty inputs, the DB updates with the initial state of the book
+    const onClose = () => {
+        if(error) updateBook(initialbook)
+    }
 
     return (
         <Popup
             trigger={<button className="btn"> EDIT </button>}
             modal
             closeOnDocumentClick
-            onOpen={() => setNewBook(book)}
+            onOpen={() => onOpen(book)}
+            onClose={onClose}
         >
             <div className="contenedor">
                 <div className="row">
@@ -78,9 +100,6 @@ export const EditableModal = ({book}) => {
                         placeholder='Enter the new desired description of the book'
                         onChange={handleChange}
                     />
-                    <button
-                        onClick={() => updateBook(newbook)}
-                    ></button>
                 </div>
             </div>
         </Popup>

@@ -1,4 +1,4 @@
-import { PUT_BOOKS, GET_CURRENT_BOOK, GET_BOOKS } from '../../types/index'
+import { PUT_BOOKS, GET_CURRENT_BOOK, GET_BOOKS, VALIDATE_BOOK } from '../../types/index'
 
 export default (state, action) => {
     switch(action.type) {
@@ -19,9 +19,15 @@ export default (state, action) => {
             return {
                 ...state,
                 books: state.books.map( book => book._id === action.payload._id ?
-                    action.payload : book )
+                    action.payload : book ),
+                error: false
             }
-
+            
+        case VALIDATE_BOOK:
+            return {
+                ...state,
+                error: true
+            }
         default:
             return state
     }

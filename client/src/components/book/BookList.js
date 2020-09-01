@@ -11,7 +11,7 @@ const BookList = () => {
     // Get books when the component loads
     useEffect(() => {
         getBooks();
-    }, []);
+    }, [getBooks]);
 
     if(!books) return <p>There is no books to search for</p>
 

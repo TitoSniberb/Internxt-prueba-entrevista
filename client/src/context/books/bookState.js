@@ -4,7 +4,8 @@ import BookReducer from './bookReducer';
 import { 
     GET_BOOKS, 
     GET_CURRENT_BOOK, 
-    PUT_BOOKS 
+    PUT_BOOKS ,
+    VALIDATE_BOOK
 } from '../../types/index'
 import axiosClient from '../../config/axios';
 
@@ -12,7 +13,8 @@ const BookState = props => {
 
     const initialState = {
         books: [],
-        currentbook: null 
+        currentbook: null,
+        error: false
     }
 
     const [ state, dispatch ] = useReducer(BookReducer, initialState);
@@ -33,9 +35,21 @@ const BookState = props => {
 
     // Get current book
     const getCurrentBook = bookId => {
+        try {
+            dispatch({
+                type: GET_CURRENT_BOOK,
+                payload: bookId
+            });
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    // Validate book
+    const showError = bookId => {
         dispatch({
-            type: GET_CURRENT_BOOK,
-            payload: bookId
+            type: VALIDATE_BOOK
         })
     }
 
@@ -58,9 +72,11 @@ const BookState = props => {
             value={{
                 books: state.books,
                 currentbook: state.currentbook,
+                error: state.error,
                 getBooks,
                 getCurrentBook,
-                updateBook
+                updateBook,
+                showError
             }}
         >
             {props.children}
