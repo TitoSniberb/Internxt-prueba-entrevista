@@ -40,10 +40,18 @@ const BookList = () => {
     const { books, currentbook, getBooks, getCurrentBook } = bookContext;
 
     const [ gotoslide, setGoToSlide ] = useState(0);
+    const [ opendesc, setOpenDesc ] = useState(false);
+    const [ openedit, setOpenEdit ] = useState(false);
 
     let currentKey;
 
-    const [ open, setOpen ] = useState(false);
+    useEffect(() => {
+        onMount();
+    }, []);
+
+    useEffect(() => {
+        getCurrentBook(gotoslide);
+    }, [gotoslide]);
 
     const index = Math.abs(gotoslide % slides.length);
 
@@ -54,18 +62,26 @@ const BookList = () => {
         await getCurrentBook(currentKey);
     }
 
-    useEffect(() => {
-        onMount();
-    }, []);
+    if(currentbook.length === 0) return <div>loading</div>;
+    
+    const { name, description } = currentbook[0];
 
     // Open modal
-    const handleOpen = () => {
-        setOpen(true);
+    const handleOpenDescriptive = () => {
+        setOpenDesc(true);
+    };
+
+    const handleOpenEditable = () => {
+        setOpenEdit(true);
     };
 
     // Close modal
-    const handleClose = () => {
-        setOpen(false);
+    const handleCloseDescriptive = () => {
+        setOpenDesc(false);
+    };
+
+    const handleCloseEditable = () => {
+        setOpenEdit(false);
     };
 
     if(!books) return <p>There is no books to search for</p>
@@ -74,7 +90,7 @@ const BookList = () => {
         <div className="container main">
 
             <div className="row carousel">
-                <a style={{width: '100%', height: '100%'}} onClick={handleOpen}>
+                <a style={{width: '100%', height: '100%'}} onClick={handleOpenDescriptive}>
                     <Carousel 
                         slides={slides} 
                         goToSlide={gotoslide}
@@ -82,10 +98,17 @@ const BookList = () => {
                         animationConfig={config.gentle}
                     />
                 </a>
+
+                <DescriptiveModal
+                    open={opendesc}
+                    handleClose={handleCloseDescriptive}
+                    book={currentbook}
+                />
                 
-                <TransitionsModal
-                    open={open}
-                    handleClose={handleClose}
+                <EditableModal 
+                    open={openedit}
+                    handleClose={handleCloseEditable}
+                    book={currentbook}
                 />
 
                 <div
@@ -94,13 +117,13 @@ const BookList = () => {
                     <a  style={{marginRight: '8vw'}}
                         onClick={() => {
                             setGoToSlide(gotoslide - 1)
-                            getCurrentBook(slides[index].key)
+                            //getCurrentBook(slides[index].key)
                         }}
                     >
                         <NavigateBefore className="icon" />
                     </a>
 
-                    <a className="image">
+                    <a className="image" onClick={handleOpenEditable}>
                         <BorderColor className="icon" style={{fontSize: '4vw'}} />
                         <p>EDIT</p>
                     </a>
@@ -108,7 +131,7 @@ const BookList = () => {
                     <a  style={{marginLeft: '8vw'}}
                         onClick={() => {
                             setGoToSlide(gotoslide + 1)
-                            getCurrentBook(slides[index].key)
+                            //getCurrentBook(slides[index].key)
                         }}
                     >
                         <NavigateNext className="icon" />
@@ -118,7 +141,7 @@ const BookList = () => {
             </div>
 
             <div className="row">
-                    <h2>{}</h2>
+                    <h2>{name} : {description}</h2>
             </div>
 
                 {/* <ul>

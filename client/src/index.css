@@ -28,7 +28,7 @@ h2:hover  {
 p {
   color: rgb(228, 228, 228);
   text-align: center;
-  font-family: 'Staatliches';
+  font-family: 'Staatliches', cursive;
   letter-spacing: .1vw;
   font-size: 2vw;
   margin: 0;

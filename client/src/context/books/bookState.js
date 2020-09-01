@@ -13,7 +13,7 @@ const BookState = props => {
 
     const initialState = {
         books: [],
-        currentbook: null,
+        currentbook: [],
         error: false
     }
 

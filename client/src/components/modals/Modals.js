@@ -5,7 +5,7 @@ import Modal from '@material-ui/core/Modal';
 import Fade from '@material-ui/core/Fade';
 import '../styles.scss';
 
-export const DescriptiveModal = ({book}) => {
+/* export const DescriptiveModal = ({book}) => {
 
     // Object destructuring to get name and desc
     const { name, description } = book;
@@ -22,9 +22,113 @@ export const DescriptiveModal = ({book}) => {
             </div>
         </Popup>
     )   
+} */
+
+export const DescriptiveModal = ({open, handleClose, book}) => {
+
+    const { name, description } = book[0];
+    return (
+        <Modal
+            aria-labelledby="transition-modal-title"
+            aria-describedby="transition-modal-description"
+            className='newmodal'
+            open={open}
+            onClose={handleClose}
+            closeAfterTransition
+        >
+            <Fade in={open}>
+                <div className='paper'>
+                    <span className="title" id="transition-modal-title">{name}</span>
+                    <span className="text" id="transition-modal-description">{description}</span>
+                </div>
+            </Fade>
+        </Modal>
+    );
 }
 
-export const EditableModal = ({book}) => {
+export const EditableModal = ({open, handleClose, book}) => {
+
+    // Extract the necessary from the context
+    const bookContext = useContext(BookContext);
+    const { error, updateBook, showError } = bookContext;
+
+    const [ newbook, setNewBook ] = useState(book[0])
+    const { _id, name, description } = newbook;
+
+    // In case of an empty input, we save the initial state of the book
+    const [ initialbook, setInitialBook ] = useState({})
+
+    const handleChange = e => {
+        setNewBook({
+            ...book[0],
+            [e.target.name]: e.target.value
+        });
+    };
+    
+    // As useState is asnycrhonous, the last typed character will not save until the next
+    // render, so useEffect is needed, also, we must first check if there is any entries
+    // to prevent unwanted loops
+    useEffect(() => {
+        // We make the validation
+        if(Object.entries(newbook).length !== 0){
+
+            if(name.trim().length === 0 || description.trim().length === 0){
+                showError(_id);
+
+            } else {
+                updateBook(newbook);
+            }
+        }
+    }, [newbook]);
+
+    // If the user closes the modal with empty inputs, the DB updates with the initial state of the book
+    const onClose = () => {
+        if(error) updateBook(initialbook)
+    }
+
+    return (
+        <Modal
+            aria-labelledby="transition-modal-title"
+            aria-describedby="transition-modal-description"
+            className='newmodal'
+            open={open}
+            onClose={handleClose}
+            closeAfterTransition
+        >
+            <Fade in={open}>
+                <div className="contenedor">
+                <div className="row">
+                    <h2 className="label">Change the name</h2>
+                    <input
+                        type="text"
+                        name="name"
+                        value={name}
+                        className="input-text"
+                        placeholder='Enter the new desired name of the book'
+                        autoComplete="off"
+                        onChange={handleChange}
+                    />
+                </div>
+                
+                <div className="row">
+                    <h2 className="label">Change the description</h2>
+                    <input
+                        type="text"
+                        name="description"
+                        value={description}
+                        className="input-text"
+                        contentEditable={true}
+                        placeholder='Enter the new desired description of the book'
+                        onChange={handleChange}
+                    />
+                </div>
+            </div>
+            </Fade>
+        </Modal>
+    );
+}
+
+/* export const EditableModal2 = ({book}) => {
 
     // Extract the necessary from the context
     const bookContext = useContext(BookContext);
@@ -106,43 +210,5 @@ export const EditableModal = ({book}) => {
             </div>
         </Popup>
     )   
-}
+} */
 
-export const TransitionsModal = ({open, handleClose}) => {
-
-    const bookContext = useContext(BookContext);
-    const { currentbook } = bookContext;
-
-    const [ books, setBook ] = useState({
-        name: '',
-    });
-
-    useEffect(() => {
-        if( currentbook !== null) {
-            setBook(currentbook);
-            console.log('adwa', books)
-        } else {
-            setBook({
-                name: ''
-            })
-        }
-    }, [currentbook])
-
-    return (
-        <Modal
-            aria-labelledby="transition-modal-title"
-            aria-describedby="transition-modal-description"
-            className='newmodal'
-            open={open}
-            onClose={handleClose}
-            closeAfterTransition
-        >
-            <Fade in={open}>
-                <div className='paper'>
-                    <h2 id="transition-modal-title">Name{}</h2>
-                    <p id="transition-modal-description">Desc{}</p>
-                </div>
-            </Fade>
-        </Modal>
-    );
-}
