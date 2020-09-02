@@ -53,7 +53,7 @@ export const EditableModal = ({book}) => {
 
             } else updateBook(newbook);
         }
-
+        // eslint-disable-next-line
     }, [newbook]);
 
     // On modal open (for more info take a look into: https://react-popup.elazizi.com/component-api/)
